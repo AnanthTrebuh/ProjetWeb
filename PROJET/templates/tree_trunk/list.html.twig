@@ -2,3 +2,30 @@
 
 {% block title %}Liste Article{% endblock %}
 
+{% block titre_principal %}Liste des produits{% endblock %}
+
+{% block vue %}
+    {% if treeTrunks is null %}
+        <p>il n'y as pas de tronc d'arbres dans la liste</p>
+    {% else %}
+        <table>
+            <tr>
+                <td>Libellé</td>
+                <td>Prix</td>
+                <td>Quantite</td>
+            </tr>
+            <tbody>
+            {% for treeTrunk in treeTrunks %}
+                <tr>
+                    {% dump(treeTrunk) %}
+                    <td>{{ treeTrunk.Nom }}</td>
+                    <td>{{ treeTrunk.Prix }}</td>
+                    <td>{{ treeTrunk.Quantite }}</td>
+                    <td><a href="{{ path('treeTrunk_view', {'id' : treeTrunk.id}) }}">Voir</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    
+{% endblock %}

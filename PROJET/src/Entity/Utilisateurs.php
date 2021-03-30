@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateursRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,7 +17,6 @@ class Utilisateurs
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name ="pk", type="integer")
-     *
      *
      */
     private $id;
@@ -49,6 +50,16 @@ class Utilisateurs
      * @ORM\Column(type="boolean")
      */
     private $isadmin;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Panier::class, mappedBy="idU")
+     */
+    private $paniers;
+
+    public function __construct()
+    {
+        $this->paniers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -123,6 +134,36 @@ class Utilisateurs
     public function setIsadmin(bool $isadmin): self
     {
         $this->isadmin = $isadmin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Panier[]
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): self
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers[] = $panier;
+            $panier->setIdU($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): self
+    {
+        if ($this->paniers->removeElement($panier)) {
+            // set the owning side to null (unless already changed)
+            if ($panier->getIdU() === $this) {
+                $panier->setIdU(null);
+            }
+        }
 
         return $this;
     }

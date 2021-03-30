@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Produit;
+use App\Entity\Panier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Produit|null find($id, $lockMode = null, $lockVersion = null)
- * @method Produit|null findOneBy(array $criteria, array $orderBy = null)
- * @method Produit[]    findAll()
- * @method Produit[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Panier|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Panier|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Panier[]    findAll()
+ * @method Panier[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProduitRepository extends ServiceEntityRepository
+class PanierRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Produit::class);
+        parent::__construct($registry, Panier::class);
     }
 
     // /**
-    //  * @return Produit[] Returns an array of Produit objects
+    //  * @return Panier[] Returns an array of Panier objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class ProduitRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Produit
+    public function findOneBySomeField($value): ?Panier
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')

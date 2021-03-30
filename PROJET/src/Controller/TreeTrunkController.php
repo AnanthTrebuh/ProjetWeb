@@ -15,10 +15,14 @@ class TreeTrunkController extends AbstractController
     /**
      * @Route("/tree/trunk", name="tree_trunk")
      */
-    public function index(): Response
+    public function listAction(): Response
     {
-        return $this->render('tree_trunk/index.html.twig', [
-            'controller_name' => 'TreeTrunkController',
-        ]);
+        $em = $this->getDoctrine()->getManager();
+        $treeTrunkRepository = $em->getRepository('App:TreeTrunk');
+        $treeTrunks = $treeTrunkRepository->findAll();
+        $args = array(
+            'treeTrunk' => $treeTrunks
+        );
+        return $this->render('tree_trunk/index.html.twig', $args);
     }
 }

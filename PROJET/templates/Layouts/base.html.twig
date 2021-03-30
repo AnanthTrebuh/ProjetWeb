@@ -14,8 +14,9 @@
         {% endblock %}
     </head>
     <body>
-        <div id="entete">
+        <div id="head">
             <!-- ici le block en tète en fonction de l'utilisateur -->
+            {%  include 'Layouts/head.html.twig' %}
         </div>
         <div id="vue">
             <h1>{% block titre_principal %}titre_principal {% endblock %}</h1>
@@ -23,7 +24,7 @@
             {% block vue %}{% endblock %}
         </div>
         <div id="footer">
-            {%  include '/Sandbox/Layouts/footer.html.twig' %}
+            {%  include 'Layouts/footer.html.twig' %}
         </div>
     </body>
 </html>

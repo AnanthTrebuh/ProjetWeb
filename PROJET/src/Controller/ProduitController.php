@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class ProduitController extends AbstractController
+{
+    /**
+     * @Route("/produit", name="produit")
+     */
+    public function listAction(): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        return $this->render('produit/list.html.twig');
+    }
+}

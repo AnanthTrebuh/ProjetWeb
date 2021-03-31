@@ -25,4 +25,12 @@ class TreeTrunkController extends AbstractController
         );
         return $this->render('tree_trunk/index.html.twig', $args);
     }
+    /**
+     * @Route("/accueil", name = "accueil")
+     */
+    public function ActionAccueil() : Reponse
+    {
+        return $this->render("acceuil.html.twig");
+    }
+
 }

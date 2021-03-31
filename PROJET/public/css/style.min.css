@@ -1,0 +1,33 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+#head {
+
+    background-color: #b0413e;
+    height: 80px;
+
+}
+
+#footer {
+
+    background-color: #b0413e;
+    height: 80px;
+
+}
+
+#vue {
+    padding-bottom: 150px;
+    padding-top: 150px;
+}
+
+ul{
+    float: left;
+}
+
+li{
+    display: inline-block;
+    line-height: 80px;
+    margin: 0 30px;
+}

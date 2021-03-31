@@ -28,9 +28,16 @@ class TreeTrunkController extends AbstractController
     /**
      * @Route("/accueil", name = "accueil")
      */
-    public function ActionAccueil() : Reponse
+    public function ActionAccueil() : Response
     {
-        return $this->render("acceuil.html.twig");
+        return $this->render('acceuil.html.twig');
+    }
+    /**
+     * @Route("/test", name = "test")
+     */
+    public function ActionTest() : Response
+    {
+        return $this->render('tree_trunk/test.html.twig');
     }
 
 }

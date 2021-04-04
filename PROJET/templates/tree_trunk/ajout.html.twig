@@ -1,0 +1,15 @@
+{% extends 'Layouts/base.html.twig' %}
+
+{% block title %}Ajout d' Article{% endblock %}
+
+{% block titre_principal %}Ajout de produit{% endblock %}
+
+{% block vue %}
+    {{ form_start(formTreeTrunk) }}
+
+    {{ form_widget(formTreeTrunk) }}
+
+    <button type="submit">Ajouter le produit</button>
+
+    {{ form_end(formTreeTrunk) }}
+{% endblock %}

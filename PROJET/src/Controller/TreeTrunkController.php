@@ -6,6 +6,7 @@ use App\Entity\TreeTrunk;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\TreeTrunkType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -23,18 +24,15 @@ class TreeTrunkController extends AbstractController
     }
 
     /**
-     * @Route("/test", name="test")
-     */
-    public function ActionTest() : Response
-    {
-        return $this->render('tree_trunk/test.html.twig');
-    }
-
-    /**
      * @Route("/ajout", name="treeTrunk_ajout")
      */
     public function ajoutAction(Request $request)
     {
+        $user = $this->determineAction(); /* remplacer par getParameter('user'); */
+        if($user != 'admin')
+        {
+            throw new NotFoundHttpException('Vous n\'avez pas avoir acces à cette page');
+        }
         $em = $this->getDoctrine()->getManager();
         $treeTrunk = new TreeTrunk();
 
@@ -88,6 +86,6 @@ class TreeTrunkController extends AbstractController
             'treeTrunk' => $treeTrunk
         );
 
-        return $this->render('tree_trunk/list.html.twig', $args);
+        return $this->render('tree_trunk/view.html.twig', $args);
     }
 }

@@ -21,7 +21,7 @@ class UtilisateursType extends AbstractType
     {
         $builder
             ->add('identifiant', TextType::class, ['label' => 'identifiant', 'attr' => ['placeholder' => 'identifiant']])
-            ->add('motdepasse')
+            ->add('motdepasse', PasswordType::class)
             ->add('nom',TextType::class, ['label' => 'nom de l\'utilisateur', 'attr' => ['placeholder' => 'nom']])
             ->add('prenom',TextType::class, ['label' => 'prenom de l\'utilisateur', 'attr' => ['placeholder' => 'prenom']])
             ->add('anniversaire', BirthdayType::class)

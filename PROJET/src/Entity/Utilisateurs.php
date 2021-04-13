@@ -22,12 +22,12 @@ class Utilisateurs
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, options={"comment"= "sert de login (doit être unique)"})
      */
     private $identifiant;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, options={"comment"= "mot de passe crypté : il faut une taille assez grande pour ne pas le tronquer"})
      */
     private $motdepasse;
 
@@ -47,7 +47,7 @@ class Utilisateurs
     private $anniversaire;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"comment"= "type boolean"})
      */
     private $isadmin;
 

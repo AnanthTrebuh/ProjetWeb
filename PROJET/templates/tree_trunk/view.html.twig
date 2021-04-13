@@ -1,11 +1,11 @@
 {% extends 'Layouts/base.html.twig' %}
 
-{% block title %}Article{{ treeTrunk.id }}{% endblock %}
+{% block title %}Article {{ treeTrunk.id }}{% endblock %}
 
 {% block titre_principal %}{{ treeTrunk.name }}{% endblock %}
 
 {% block vue %}
-    {% if treeTrunks is null %}
+    {% if treeTrunk is null %}
         <p>il n'y as pas de tronc d'arbres dans la liste</p>
     {% else %}
         <table>
@@ -23,6 +23,9 @@
                 </tr>
             </tbody>
         </table>
+
+        <a href="{{ path('treeTrunk_list') }}">liste</a>
+
     {% endif %}
 
 {% endblock %}

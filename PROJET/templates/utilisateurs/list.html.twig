@@ -1,0 +1,45 @@
+{% extends 'Layouts/base.html.twig' %}
+
+{% block title %}Liste utilisateurs{% endblock %}
+
+{# seulement si admin #}
+
+{% block titre_principal %}Liste des Utilisateurs{% endblock %}
+
+{% block vue %}
+    {% if utilisateurs is null %}
+        <p>il n'y as pas d'utilisateur dans la liste</p>
+    {% else %}
+        <table>
+            <tr>
+                <td>Identifiant</td>
+                <td>Mot de passe</td>
+                <td>Prénom</td>
+                <td>Nom</td>
+                <td>Date de naissance</td>
+                <td>Status</td>
+            </tr>
+            <tbody>
+            {% for utilisateur in utilisateurs %}
+                <tr>
+                    <td>{{ utilisateur.identifiant }}</td>
+                    <td>{{ utilisateur.motdepasse }}</td>
+                    {% if utilisateur.isadmin %}
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>Admin</td>
+                    {% else %}
+                    <td>{{ utilisateur.prenom }}</td>
+                    <td>{{ utilisateur.nom }}</td>
+                    <td>{{ utilisateur.anniversaire|date('d/m/y') }}</td>
+                    <td>Visiteur</td>
+                        {% endif %}
+                    <td><a href="{{ path('utilisateur_supprime', {'id' : utilisateur.id}) }}">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+{% endblock %}

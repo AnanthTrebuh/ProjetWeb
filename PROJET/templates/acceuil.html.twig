@@ -2,8 +2,11 @@
 
 {% block title %}Accueil{% endblock %}
 
-{% block titre_principal %}Bienvenue à l'accueil{% endblock %}
-
-
-
-
+{% block titre_principal %}
+    Bienvenue à l'accueil
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endblock %}

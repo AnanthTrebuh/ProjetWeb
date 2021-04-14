@@ -59,7 +59,7 @@ class UtilisateursController extends AbstractController
         }
         $em = $this->getDoctrine()->getManager();
         $utilisateur = new Utilisateurs();
-
+        $utilisateur->setIsadmin(false);
         $form = $this->createFormBuilder($utilisateur)
                 ->add('identifiant')
                 ->add('motdepasse')
@@ -71,6 +71,7 @@ class UtilisateursController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $this->addFlash('success','Vous etes bien inscris.');
             $em->persist($utilisateur);
             $em->flush();
 
@@ -113,7 +114,8 @@ class UtilisateursController extends AbstractController
      */
     public function deconnexionAction()
     {
-
+        $this->addFlash('success','Vous êtes bien deconnecté');
+        return $this->redirectToRoute('acceuil');
     }
 
     /**

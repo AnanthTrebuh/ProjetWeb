@@ -1,12 +1,44 @@
-        <ul>
-            <li>
-                <a href="{{ path('acceuil') }}">Acceuil</a>
-            </li>
-            <li>
-                <a href=" {{ path('utilisateur_creation_compte') }}">créer un compte</a>
-            </li>
-            <li>
-                <a href="{{ path('utilisateur_connexion') }}">Connexion</a>
-            </li>
+{% if produits is null %}
+<p>Il n'y a pas de produit dans cette base de données</p>
+{% else %}
+    {%  set i = 0 %}
+    {% for produit in produits %}
+        {% set i = i + 1 %}
+    {% endfor %}
+<p>nombre de produit présent : {{ i }}</p>
+{% endif %}
+<ul>
+    <li>
+        <a href="{{ path('acceuil') }}">Acceuil</a>
+    </li>
 
-        </ul>
+    {% if user is null %}
+    <li>
+        <a href=" {{ path('utilisateur_creation_compte') }}">créer un compte</a>
+    </li>
+    <li>
+        <a href="{{ path('utilisateur_connexion') }}">Connexion</a>
+    </li>
+    {% elseif user.isadmin %}
+    <li>
+        <a href="{{ path('utilisateurs_list') }}">Gérer Utilisateur(s)</a>
+    </li>
+    <li>
+        <a href="{{ path('treeTrunk_ajout') }}">Ajouter Produit</a>
+    </li>
+    <li>
+        <a href="{{ path('utilisateur_deconnexion') }}">Deconnexion</a>
+    </li>
+    <li>
+        <a href="https://fr.wikipedia.org/wiki/Amour et Amn&eacute;sie">Surprise</a>
+    </li>
+    {% else %}
+    <li>
+        <a href="{{ path('treeTrunk_list') }}">Liste Produit(s)</a>
+    </li>
+    <li>
+        <p>Panier à faire</p>
+    </li>
+
+    {% endif %}
+</ul>

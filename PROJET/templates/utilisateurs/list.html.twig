@@ -33,7 +33,7 @@
                     <td>{{ utilisateur.prenom }}</td>
                     <td>{{ utilisateur.nom }}</td>
                     <td>{{ utilisateur.anniversaire|date('d/m/y') }}</td>
-                    <td>Visiteur</td>
+                    <td>Client</td>
                         {% endif %}
                     <td><a href="{{ path('utilisateur_supprime', {'id' : utilisateur.id}) }}">Supprimer</a></td>
                 </tr>

@@ -39,26 +39,20 @@ class GeneralController extends AbstractController
         }
     }
 
-    /**
-     * @route ("/create-flash",
-     *     name="general_create_flash")
-     */
-    public function createFlashAction():Response
-    {
-        $this->addFlash('info', 'Tout s\'est bien passé');
-        $this->addFlash('info', 'et vraiment bien');
+    public function menuAction() : Response{
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateurs');
+        $utilisateur = $utilisateurRepository->findOneByidentifiant($user);
 
-        return $this->redirectToRoute('genrale_display_flash');
-    }
+        $produitRep = $em->getRepository('App:TreeTrunk');
+        $produits = $produitRep->findAll();
 
-    /**
-     * @route(
-     *     "/general-flash",
-     *     name="sandbox_display_flash"
-     * )
-     */
-    public function dysplayFlashAction(): Response
-    {
-        return $this->render('Sandbox/dysplay_flash.html.twig');
+        $args =array(
+            'user' => $utilisateur,
+            'produits' => $produits
+        );
+
+        return $this->render('Layouts/menu.html.twig', $args);
     }
 }

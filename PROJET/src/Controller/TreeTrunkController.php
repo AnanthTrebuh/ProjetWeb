@@ -28,7 +28,7 @@ class TreeTrunkController extends AbstractController
      */
     public function ajoutAction(Request $request)
     {
-        $user = $this->determineAction(); /* remplacer par getParameter('user'); */
+        $user = $this->getParameter('user');
         if($user != 'admin')
         {
             throw new NotFoundHttpException('Vous n\'avez pas avoir acces à cette page');
@@ -62,6 +62,8 @@ class TreeTrunkController extends AbstractController
      */
     public function listAction(): Response
     {
+        $user = $this->getParameter('user');
+        if($user)
         $em = $this->getDoctrine()->getManager();
         $treeTrunkRepository = $em->getRepository('App:TreeTrunk');
         $treeTrunks = $treeTrunkRepository->findAll();

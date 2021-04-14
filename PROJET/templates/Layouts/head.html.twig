@@ -1,1 +1,6 @@
-    {%  include 'Layouts/menu.html.twig' %}
+<div id="bandeau">
+
+</div>
+<div id="menu">
+    {{ render(controller('App\\Controller\\GeneralController::menuAction')) }}
+</div>

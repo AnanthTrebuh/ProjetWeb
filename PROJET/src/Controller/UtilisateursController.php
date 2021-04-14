@@ -122,7 +122,7 @@ class UtilisateursController extends AbstractController
      * )
      */
     /*determine si l'utilisateur est un visiteur enregistrer un admin ou un visiteur non enregistrer */
-    public function determineAction(){
+    public function determineAction(): String{
         $user = $this->getParameter('user');
         $em = $this->getDoctrine()->getManager();
         $utilisateurRepository = $em->getRepository('App:Utilisateurs');

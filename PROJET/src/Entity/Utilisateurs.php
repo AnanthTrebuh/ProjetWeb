@@ -6,6 +6,9 @@ use App\Repository\UtilisateursRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
 
 /**
  * @ORM\Table (name="im2021_utilisateurs")
@@ -23,26 +26,31 @@ class Utilisateurs
 
     /**
      * @ORM\Column(type="string", length=30, options={"comment"= "sert de login (doit être unique)"})
+     * @Assert\NotBlank()
      */
     private $identifiant;
 
     /**
      * @ORM\Column(type="string", length=64, options={"comment"= "mot de passe crypté : il faut une taille assez grande pour ne pas le tronquer"})
+     * @Assert\NotBlank()
      */
     private $motdepasse;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
+     * @Assert\NotBlank (message="Doit être rempli")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
+     * @Assert\NotBlank (message="Doit être rempli")
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\NotBlank (message="Doit être rempli")
      */
     private $anniversaire;
 

@@ -8,11 +8,16 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 /**
  * @ORM\Table (name="im2021_utilisateurs")
  * @ORM\Entity(repositoryClass=UtilisateursRepository::class)
+ * @UniqueEntity(
+ *     fields={"identifiant"},
+ *     message="Identifiant déjà pris !"
+ * )
  */
 class Utilisateurs
 {
@@ -35,6 +40,7 @@ class Utilisateurs
      * @Assert\NotBlank()
      */
     private $motdepasse;
+
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)

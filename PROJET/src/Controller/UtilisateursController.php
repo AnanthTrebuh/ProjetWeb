@@ -7,23 +7,34 @@ use App\Entity\TreeTrunk;
 use App\Entity\Utilisateurs;
 use App\Form\UtilisateursType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-
+/**
+ * Class UtilisateursController
+ * @package App\Controller
+ * @Route("/utilisateur")
+ */
 class UtilisateursController extends AbstractController
 {
     /**
-     * @Route("/utilisateurs/list", name="utilisateurs_list")
+     * @Route("/list", name="utilisateurs_list")
      */
     public function listAction(): Response
     {
-        $user = $this->determineAction(); /* remplacer par getParameter('user'); */
-        if($user != 'admin')
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateurs');
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
+        if($utilisateur == null || !$utilisateur->getIsadmin())
         {
-            throw new NotFoundHttpException('Vous n\'avez pas avoir acces à cette page');
+            throw new NotFoundHttpException('Vous n\'avez pas acces à cette page');
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -46,31 +57,39 @@ class UtilisateursController extends AbstractController
 
     /**
      * @route(
-     *     "/utilisateur/creation_compte",
+     *     "/creation_compte",
      *     name="utilisateur_creation_compte"
      * )
      */
     public function creationAction(Request $request):Response
     {
-        $user = $this->determineAction(); /* remplacer par getParameter('user'); */
-        if($user != 'null')
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateurs');
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
+        if($utilisateur != null)
         {
-            throw new NotFoundHttpException('Vous n\'avez pas avoir acces à cette page');
+            throw new NotFoundHttpException('Vous n\'avez pas acces à cette page');
         }
         $em = $this->getDoctrine()->getManager();
         $utilisateur = new Utilisateurs();
         $utilisateur->setIsadmin(false);
         $form = $this->createFormBuilder($utilisateur)
-                ->add('identifiant')
-                ->add('motdepasse')
-                ->add('nom')
-                ->add('prenom')
-                ->add('anniversaire')
+                ->add('identifiant', TextType::class)
+                ->add('motdepasse',PasswordType::class)
+                ->add('nom',TextType::class)
+                ->add('prenom',TextType::class)
+                ->add('anniversaire',BirthdayType::class)
                 ->getForm();
+
+
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $mdp = $utilisateur->getMotdepasse();
+            $utilisateur->setMotdepasse(sha1($mdp));
+
             $this->addFlash('success','Vous etes bien inscris.');
             $em->persist($utilisateur);
             $em->flush();
@@ -86,24 +105,82 @@ class UtilisateursController extends AbstractController
 
     /**
      * @route(
-     *     "utilisateur/suppr/{id}",
+     *     "/suppr/{id}",
      *     name="utilisateur_supprime"
      * )
      */
     public function supprimeAction($id)
     {
-        $user = $this->determineAction(); /* remplacer par getParameter('user'); */
-        if($user != 'admin')
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateurs');
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
+        if(!$utilisateur->getIsadmin())
         {
             throw new NotFoundHttpException('Vous n\'avez pas avoir acces à cette page');
         }
+        if($utilisateur->getId() == $id)
+        {
+            $this->addFlash('failure', 'Vous ne pouvez pas vous supprimer');
+        }
+        else {
+            $em = $this->getDoctrine()->getManager();
+            $utilisateurRepository = $em->getRepository('App:Utilisateurs');
+            $utilisateur = $utilisateurRepository->find($id);
+
+            $em->remove($utilisateur);
+            $em->flush();
+
+        }
+        return $this->redirectToRoute('utilisateurs_list');
+    }
+
+    /**
+     * @route(
+     *      "/profil",
+     *     name="utilisateur_profil"
+     *     )
+     */
+    public function profilAction(Request $request) {
+        $user = $this->getParameter('user');
         $em = $this->getDoctrine()->getManager();
         $utilisateurRepository = $em->getRepository('App:Utilisateurs');
-        $utilisateur = $utilisateurRepository->find($id);
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
 
-        $em->remove($utilisateur);
+        if(!$utilisateur || $utilisateur->getIsadmin())
+        {
+            throw new NotFoundHttpException('Vous n\'avez pas avoir acces à cette page');
+        }
 
-        return $this->render('utilisateurs/list.html.twig');
+        $form = $this->createFormBuilder($utilisateur)
+            ->add('identifiant', TextType::class)
+            ->add('motdepasse',PasswordType::class)
+            ->add('nom',TextType::class)
+            ->add('prenom',TextType::class)
+            ->add('anniversaire',BirthdayType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $mdp = $utilisateur->getMotdepasse();
+            $utilisateur->setMotdepasse(sha1($mdp));
+
+            $utilisateur2 = $utilisateur;
+            $em->remove($utilisateur);
+
+            $this->addFlash('success','Modification effectué.');
+            $em->persist($utilisateur2);
+            $em->flush();
+
+            return $this->redirectToRoute('treeTrunk_list');
+        }
+
+        return $this->render('utilisateurs/profil.html.twig', [
+            'form' => $form->createView(),
+            'user' => $utilisateur
+        ]);
     }
 
     /**
@@ -137,7 +214,7 @@ class UtilisateursController extends AbstractController
         */
         /*test si ça fonctionne bien*/
         if(!$utilisateur){
-            return 'null';
+            return 'visiteur';
         }
         else if($utilisateur->getIsadmin())
         {
@@ -145,7 +222,7 @@ class UtilisateursController extends AbstractController
         }
         else
         {
-            return 'visiteur';
+            return 'client';
         }
     }
 }

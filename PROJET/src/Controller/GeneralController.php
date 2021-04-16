@@ -9,6 +9,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class GeneralController extends AbstractController
 {
     /**
+     * @Route("/", name="acceuil")
+     */
+    public function AcceuilAction() : Response
+    {
+        return $this->render('acceuil.html.twig');
+    }
+
+    /**
      * @route(
      *     name="generale_utilisateur_determine"
      * )

@@ -34,6 +34,9 @@
     </li>
     {% else %}
     <li>
+        <a href="{{ path('utilisateur_profil', {'id' : user.id})}}">Profil</a>
+    </li>
+    <li>
         <a href="{{ path('treeTrunk_list') }}">Liste Produit(s)</a>
     </li>
     <li>

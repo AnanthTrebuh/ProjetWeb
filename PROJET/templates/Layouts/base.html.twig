@@ -18,6 +18,7 @@
         </div>
         <div id="vue">
             <h1>{% block titre_principal %}titre_principal {% endblock %}</h1>
+            {% include 'Layouts/flashMessage.html.twig' %}
             <!-- ici le bloc vue -->
             {% block vue %}{% endblock %}
         </div>

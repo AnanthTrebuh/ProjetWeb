@@ -15,13 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TreeTrunkController extends AbstractController
 {
-    /**
-     * @Route("/", name="acceuil")
-     */
-    public function AcceuilAction() : Response
-    {
-        return $this->render('acceuil.html.twig');
-    }
+
 
     /**
      * @Route("/ajout", name="treeTrunk_ajout")
@@ -48,8 +42,8 @@ class TreeTrunkController extends AbstractController
             $em->persist($treeTrunk);
             $em->flush();
 
-            $this->addFlash('info', 'ajout ok');
-            return $this->redirectToRoute('treeTrunk_list');
+            $this->addFlash('success','Ajout effectué.');
+            return $this->redirectToRoute('acceuil');
         }
 
         return $this->render('tree_trunk/ajout.html.twig', [

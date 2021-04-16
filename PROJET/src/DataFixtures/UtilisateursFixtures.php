@@ -18,6 +18,12 @@ class UtilisateursFixtures extends Fixture
             ->setIsadmin(true);
         $manager->persist($admin);
 
+        $admin2  = new Utilisateurs();
+        $admin2->setIdentifiant("admin2")
+            ->setMotdepasse(sha1("nimda"))
+            ->setIsadmin(true);
+        $manager->persist($admin2);
+
         $gilles = new Utilisateurs();
         $gilles->setIdentifiant('gilles')
             ->setMotdepasse(sha1("sellig"))

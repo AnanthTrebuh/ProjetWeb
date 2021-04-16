@@ -1,0 +1,22 @@
+{% extends 'Layouts/base.html.twig' %}
+
+{% block title %}Votre Compte{% endblock %}
+
+
+
+{% block titre_principal %}Gestion du Profil{% endblock %}
+
+{% block vue %}
+    {{ form_start(form) }}
+
+    {{ form_row(form.prenom, {'label' : 'Prénom', 'attr' : {'placeholder' : user.prenom}}) }}
+    {{ form_row(form.nom, {'label' : 'Nom', 'attr' : {'placeholder' : user.nom}}) }}
+    {{ form_row(form.identifiant, {'label' : 'Identifiant', 'attr' : {'placeholder' : user.identifiant}}) }}
+    {{ form_row(form.motdepasse, {'label' : 'Mot de Passe', 'attr' : {'placeholder' : 'Mot de Passe'}}) }}
+    {{ form_row(form.anniversaire, {'label' : 'Date de Naissance'}) }}
+
+    <button type="submit">Actualisé</button>
+    {{ form_end(form) }}
+
+
+{% endblock %}

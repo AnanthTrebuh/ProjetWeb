@@ -1,3 +1,4 @@
+<div id="nbProd">
 {% if produits is null %}
 <p>Il n'y a pas de produit dans cette base de données</p>
 {% else %}
@@ -7,6 +8,8 @@
     {% endfor %}
 <p>nombre de produit présent : {{ i }}</p>
 {% endif %}
+</div>
+<div id="menu_bis">
 <ul>
     <li>
         <a href="{{ path('acceuil') }}">Acceuil</a>
@@ -45,3 +48,4 @@
 
     {% endif %}
 </ul>
+</div>

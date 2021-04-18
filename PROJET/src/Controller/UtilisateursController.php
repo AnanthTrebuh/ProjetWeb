@@ -26,7 +26,7 @@ class UtilisateursController extends AbstractController
     /**
      * @Route("/list", name="utilisateurs_list")
      */
-    public function listAction(): Response
+    public function listUserAction(): Response
     {
         $user = $this->getParameter('user');
         $em = $this->getDoctrine()->getManager();
@@ -52,6 +52,14 @@ class UtilisateursController extends AbstractController
      */
     public function connexionAction()
     {
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateurs');
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
+        if($utilisateur != null)
+        {
+            throw new NotFoundHttpException('Vous n\'avez pas acces à cette page');
+        }
         return $this->render('utilisateurs/connexion.html.twig');
     }
 
@@ -190,39 +198,15 @@ class UtilisateursController extends AbstractController
      *     )
      */
     public function deconnexionAction()
-    {
-        $this->addFlash('success','Vous êtes bien deconnecté');
-        return $this->redirectToRoute('acceuil');
-    }
-
-    /**
-     * @route(
-     *     name="generale_utilisateur_determine"
-     * )
-     */
-    /*determine si l'utilisateur est un visiteur enregistrer un admin ou un visiteur non enregistrer */
-    public function determineAction(): String{
-        $user = $this->getParameter('user');
+    {$user = $this->getParameter('user');
         $em = $this->getDoctrine()->getManager();
         $utilisateurRepository = $em->getRepository('App:Utilisateurs');
         $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
-
-        /* $args=array(
-        *     'user'=>$utilisateur
- ,      * );
-        * return $this->render('tree_trunk/test.html.twig', $args);
-        */
-        /*test si ça fonctionne bien*/
-        if(!$utilisateur){
-            return 'visiteur';
-        }
-        else if($utilisateur->getIsadmin())
+        if($utilisateur == null)
         {
-            return 'admin';
+            throw new NotFoundHttpException('Vous n\'avez pas acces à cette page');
         }
-        else
-        {
-            return 'client';
-        }
+        $this->addFlash('success','Vous êtes bien deconnecté');
+        return $this->redirectToRoute('acceuil');
     }
 }

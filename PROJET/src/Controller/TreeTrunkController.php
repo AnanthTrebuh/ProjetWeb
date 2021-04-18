@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Panier;
 use App\Entity\TreeTrunk;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,11 +24,13 @@ class TreeTrunkController extends AbstractController
     public function ajoutAction(Request $request)
     {
         $user = $this->getParameter('user');
-        if($user != 'admin')
-        {
-            throw new NotFoundHttpException('Vous n\'avez pas avoir acces à cette page');
-        }
         $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateurs');
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
+        if(!$utilisateur->getIsadmin() || $utilisateur == null)
+        {
+            throw new NotFoundHttpException('Vous n\'avez pas acces à cette page');
+        }
         $treeTrunk = new TreeTrunk();
 
         $form = $this->createFormBuilder($treeTrunk)
@@ -51,37 +54,50 @@ class TreeTrunkController extends AbstractController
         ]);
     }
 
+
+
+
     /**
-     * @Route("/list", name="treeTrunk_list")
+     * @route(
+     *     "tree_trunk/list",
+     *      name="treeTrunk_list"
+     *     )
      */
-    public function listAction(): Response
-    {
+    public function listAction(Request $request){
         $user = $this->getParameter('user');
-        if($user)
         $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateurs');
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
+        if(!$utilisateur || $utilisateur->getIsadmin())
+        {
+            throw new NotFoundHttpException('Vous n\'avez pas avoir acces à cette page');
+        }
+
         $treeTrunkRepository = $em->getRepository('App:TreeTrunk');
         $treeTrunks = $treeTrunkRepository->findAll();
 
+        $panier = new Panier();
+
+        $form = $this->createFormBuilder($panier)
+                    ->add('quantite')
+                    ->getForm();
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            //$em->persist($panier);
+            //$em->flush();
+
+            return $this->redirectToRoute('treeTrunk_affiche');
+        }
+
         $args = array(
-            'treeTrunks' => $treeTrunks
+            'treeTrunks' => $treeTrunks,
+            'form' => $form->createView()
         );
 
-        return $this->render('tree_trunk/list.html.twig', $args);
+        return $this->render("tree_trunk/list.html.twig", $args);
+
     }
 
-    /**
-     * @Route("/view/{id}", name="treeTrunk_view")
-     */
-    public function viewAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $treeTrunkRepository = $em->getRepository('App:TreeTrunk');
-        $treeTrunk = $treeTrunkRepository->find($id);
-
-        $args = array(
-            'treeTrunk' => $treeTrunk
-        );
-
-        return $this->render('tree_trunk/view.html.twig', $args);
-    }
 }

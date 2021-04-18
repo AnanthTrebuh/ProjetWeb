@@ -1,0 +1,13 @@
+<div id="bandeau_bis">
+{% if user is null %}
+    <img src="{{ asset("image/bandeau_visiteur.jpg") }}" alt="bandeau visiteur">
+
+{% elseif user.isAdmin %}
+    <img src="{{ asset("image/bandeau_admin.jpg")}}" alt="bandeau admin" >
+
+{% else %}
+    <img src="{{ asset("image/bandeau_client.jpg")}}"  alt="bandeau client">
+
+{% endif %}
+
+</div>

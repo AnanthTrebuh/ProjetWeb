@@ -5,10 +5,11 @@
 
 #head {
 
-    background-color: #b0413e;
-    height: 80px;
+    /*background-color: #b0413e;*/
+    height: 1000px;
 
 }
+
 
 #footer {
 
@@ -22,9 +23,9 @@
 
     width:100%;
 
-    padding-top:50px;
+    padding-top:100px;
 
-    height:80px;
+    height:100px;
 
 }
 

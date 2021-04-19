@@ -110,6 +110,16 @@ class UtilisateursController extends AbstractController
         ]);
 
     }
+    /**
+     * @route(
+     *     "/utilisateur/modifier_compte",
+     *     name="utilisateur_modifier_compte"
+     * )
+     */
+    public function modifierAction(Request $request):Response
+    {
+
+    }
 
     /**
      * @route(

@@ -6,26 +6,20 @@
 #head {
 
     /*background-color: #b0413e;*/
-    height: 1000px;
-
 }
 
+img{
+    height: 50px;
+    width:100%;
+}
 
 #footer {
 
-    background:#ccc;
 
     position:absolute;
-
     bottom:0;
-
-    background-color: #b0413e;
-
     width:100%;
-
-    padding-top:100px;
-
-    height:100px;
+    height:50px;
 
 }
 

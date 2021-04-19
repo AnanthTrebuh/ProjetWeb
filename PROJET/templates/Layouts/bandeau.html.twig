@@ -9,5 +9,7 @@
     <img src="{{ asset("image/bandeau_client.jpg")}}"  alt="bandeau client">
 
 {% endif %}
-
+    <div id="menu">
+        {{ render(controller('App\\Controller\\GeneralController::menuAction')) }}
+    </div>
 </div>

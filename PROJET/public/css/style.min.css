@@ -9,8 +9,21 @@
 }
 
 img{
+    position: relative;
     height: 50px;
     width:100%;
+}
+
+#menu_bis {
+    position: absolute;
+    top : -15px;
+    font-size: large;
+    color : #DDDDDD;
+    font-weight: bold;
+}
+a{
+    color : #DDDDDD;
+    text-decoration: none;
 }
 
 #footer {

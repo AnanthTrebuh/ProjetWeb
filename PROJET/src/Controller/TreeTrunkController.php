@@ -78,22 +78,9 @@ class TreeTrunkController extends AbstractController
 
         $panier = new Panier();
 
-        $form = $this->createFormBuilder($panier)
-                    ->add('quantite')
-                    ->getForm();
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            //$em->persist($panier);
-            //$em->flush();
-
-            return $this->redirectToRoute('treeTrunk_affiche');
-        }
 
         $args = array(
-            'treeTrunks' => $treeTrunks,
-            'form' => $form->createView()
+            'treeTrunks' => $treeTrunks
         );
 
         return $this->render("tree_trunk/list.html.twig", $args);

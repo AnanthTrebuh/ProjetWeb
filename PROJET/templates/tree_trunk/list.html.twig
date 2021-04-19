@@ -10,6 +10,7 @@
     {% if treeTrunks is null %}
         <p>il n'y as pas de tronc d'arbres dans la liste</p>
     {% else %}
+        <form>
         <table>
             <tr>
                 <td>Libellé</td>
@@ -24,12 +25,17 @@
                     <td>{{ treeTrunk.quantite }}</td>
                     <td>{{ treeTrunk.prix }}</td>
                     <td>
-                        <input id="{{ treeTrunk.name }}">
+                        <select name="achat" id="{{ treeTrunk.id }}">
+                            {% for i in 0..treeTrunk.quantite %}
+                            <option>{{ i }}</option>
+                            {% endfor %}
+                        </select>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+            <input type="submit" value="Acheter">
+        </form>
     {% endif %}
-
 {% endblock %}

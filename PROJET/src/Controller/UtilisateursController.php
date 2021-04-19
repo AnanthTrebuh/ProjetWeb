@@ -102,7 +102,7 @@ class UtilisateursController extends AbstractController
             $em->persist($utilisateur);
             $em->flush();
 
-            return $this->redirectToRoute('acceuil');
+            return $this->redirectToRoute('accueil');
         }
 
         return $this->render('utilisateurs/creation_compte.html.twig', [
@@ -217,6 +217,6 @@ class UtilisateursController extends AbstractController
             throw new NotFoundHttpException('Vous n\'avez pas acces à cette page');
         }
         $this->addFlash('success','Vous êtes bien deconnecté');
-        return $this->redirectToRoute('acceuil');
+        return $this->redirectToRoute('accueil');
     }
 }

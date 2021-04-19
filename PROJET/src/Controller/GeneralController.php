@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class GeneralController extends AbstractController
 {
     /**
-     * @Route("/", name="acceuil")
+     * @Route("/", name="accueil")
      */
-    public function AcceuilAction() : Response
+    public function AccueilAction() : Response
     {
-        return $this->render('acceuil.html.twig');
+        return $this->render('accueil.html.twig');
     }
 
 

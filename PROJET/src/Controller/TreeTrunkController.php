@@ -46,7 +46,7 @@ class TreeTrunkController extends AbstractController
             $em->flush();
 
             $this->addFlash('success','Ajout effectué.');
-            return $this->redirectToRoute('acceuil');
+            return $this->redirectToRoute('accueil');
         }
 
         return $this->render('tree_trunk/ajout.html.twig', [
@@ -77,7 +77,6 @@ class TreeTrunkController extends AbstractController
         $treeTrunks = $treeTrunkRepository->findAll();
 
         $panier = new Panier();
-
 
         $args = array(
             'treeTrunks' => $treeTrunks

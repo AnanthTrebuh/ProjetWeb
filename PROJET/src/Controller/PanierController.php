@@ -29,4 +29,24 @@ class PanierController extends AbstractController
 
 
     }
+
+    /**
+     * @route(
+     *     "panier/ajout",
+     *     name="ajout_panier"
+     *     )
+     */
+    public function ajoutPanierAction()
+    {
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateurs');
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
+        if(!$utilisateur || $utilisateur->getIsadmin())
+        {
+            throw new NotFoundHttpException('Vous n\'avez pas avoir acces à cette page');
+        }
+
+
+    }
 }

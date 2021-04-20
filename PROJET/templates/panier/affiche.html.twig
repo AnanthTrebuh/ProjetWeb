@@ -1,0 +1,21 @@
+{% extends 'Layouts/base.html.twig' %}
+
+{% block vue %}
+
+{% if paniers is null %}
+<p>Votre Panier est vide</p>
+{% else %}
+    <table>
+        <tr>
+            <td>Libellé</td>
+            <td>Quantité</td>
+            <td>Prix</td>
+        </tr>
+        <tbody>
+            <tr>
+                <td>{{ panier.idP.getName() }}</td>
+                <td>{{ panier.quantite }}</td>
+                <td>{{ panier.idP.getPrix() }}</td>
+            </tr>
+        </tbody>
+{% endblock %}

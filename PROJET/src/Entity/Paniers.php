@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\PanierRepository;
+use App\Repository\PaniersRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PanierRepository::class)
+ * @ORM\Entity(repositoryClass=PaniersRepository::class)
  */
-class Panier
+class Paniers
 {
     /**
      * @ORM\Id
@@ -18,8 +18,7 @@ class Panier
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity=Utilisateurs::class, mappedBy="paniers")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer")
      */
     private $idU;
 
@@ -29,8 +28,7 @@ class Panier
     private $quantite;
 
     /**
-     * @ORM\OneToMany(targetEntity=TreeTrunk::class, mappedBy="id")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer")
      */
     private $idP;
 
@@ -39,12 +37,12 @@ class Panier
         return $this->id;
     }
 
-    public function getIdU(): ?Utilisateurs
+    public function getIdU(): ?int
     {
         return $this->idU;
     }
 
-    public function setIdU(?Utilisateurs $idU): self
+    public function setIdU(int $idU): self
     {
         $this->idU = $idU;
 
@@ -63,12 +61,12 @@ class Panier
         return $this;
     }
 
-    public function getIdP(): ?TreeTrunk
+    public function getIdP(): ?int
     {
         return $this->idP;
     }
 
-    public function setIdP(?TreeTrunk $idP): self
+    public function setIdP(int $idP): self
     {
         $this->idP = $idP;
 

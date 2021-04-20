@@ -76,7 +76,6 @@ class TreeTrunkController extends AbstractController
         $treeTrunkRepository = $em->getRepository('App:TreeTrunk');
         $treeTrunks = $treeTrunkRepository->findAll();
 
-        $panier = new Panier();
 
         $args = array(
             'treeTrunks' => $treeTrunks

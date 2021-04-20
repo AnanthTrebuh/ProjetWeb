@@ -66,7 +66,7 @@ class Utilisateurs
     private $isadmin;
 
     /**
-     * @ORM\OneToMany(targetEntity=Panier::class, mappedBy="idU")
+     * @ORM\ManyToOne (targetEntity=Panier::class, inversedBy="idU")
      */
     private $paniers;
 

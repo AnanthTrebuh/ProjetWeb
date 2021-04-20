@@ -38,44 +38,6 @@ class PanierController extends AbstractController
 
     }
 
-
-    /*
-    public function ajoutPanierAction(Request $request)
-    {
-        $user = $this->getParameter('user');
-        $em = $this->getDoctrine()->getManager();
-        $utilisateurRepository = $em->getRepository('App:Utilisateurs');
-        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
-        if(!$utilisateur || $utilisateur->getIsadmin())
-        {
-            throw new NotFoundHttpException('Vous n\'avez pas avoir acces à cette page');
-        }
-
-            $all = $request->request->all();
-
-            dump($all);
-
-           for ($i = 0 ; $i < count($all); $i++)
-            {
-                $qtt = $request->request->get($i);
-                $idP = $request->request->get(-$i);
-                $produitRep =$em->getRepository('App:TreeTrunk');
-                $produit = $produitRep->find($idP);
-
-                $panier = new Panier();
-                $panier->setQuantite($qtt)
-                        ->setIdP($produit)
-                        ->setIdU($utilisateur);
-
-
-                //$produit->setQuantite($produit->getQuantite() - $qtt);
-                $em->persist($panier);
-                //$em->persist($produit);
-            }
-            $em->flush();
-        return $this->render('panier/ajout_panier.html.twig');
-    }//pas correct à corriger !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-*/
     /**
      * @route(
      *     "panier/ajout",
@@ -106,10 +68,9 @@ class PanierController extends AbstractController
 
             dump($qtt);
             $produit2 = $produit;
-            /*$produit2->setQuantite($produit->getQuantite() -  $qtt);
+            $produit2->setQuantite($produit->getQuantite() -  $qtt);
             $em->persist($panier);
             $em->persist($produit);
-            */
         }
         $em->flush();
         return $this->redirectToRoute('treeTrunk_list');

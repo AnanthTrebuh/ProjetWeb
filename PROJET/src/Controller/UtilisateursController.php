@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use App\Service\reverse;
 
 /**
  * Class UtilisateursController
@@ -68,9 +69,13 @@ class UtilisateursController extends AbstractController
      *     "/creation_compte",
      *     name="utilisateur_creation_compte"
      * )
+     * @param Request $request
+     * @param reverser $rev
+     * @return Response
      */
-    public function creationAction(Request $request):Response
+    public function creationAction(Request $request, reverse $rev):Response
     {
+
         $user = $this->getParameter('user');
         $em = $this->getDoctrine()->getManager();
         $utilisateurRepository = $em->getRepository('App:Utilisateurs');
@@ -98,7 +103,7 @@ class UtilisateursController extends AbstractController
             $mdp = $utilisateur->getMotdepasse();
             $utilisateur->setMotdepasse(sha1($mdp));
 
-            $this->addFlash('success','Vous etes bien inscris.');
+            $this->addFlash('success',$rev->reverse_message('Vous etes bien inscris.'));
             $em->persist($utilisateur);
             $em->flush();
 
@@ -110,17 +115,6 @@ class UtilisateursController extends AbstractController
         ]);
 
     }
-    /**
-     * @route(
-     *     "/utilisateur/modifier_compte",
-     *     name="utilisateur_modifier_compte"
-     * )
-     */
-    public function modifierAction(Request $request):Response
-    {
-
-    }
-
     /**
      * @route(
      *     "/suppr/{id}",

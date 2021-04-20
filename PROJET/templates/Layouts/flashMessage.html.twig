@@ -1,6 +1,6 @@
 {% block flashMsg %}
 {% for message in app.flashes('success') %}
-    <div class="alert alert-success">
+    <div id="success" class="alert alert-success">
         {{ message }}
     </div>
 {% endfor %}

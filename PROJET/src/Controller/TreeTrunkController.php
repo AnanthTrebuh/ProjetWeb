@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Panier;
 use App\Entity\TreeTrunk;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

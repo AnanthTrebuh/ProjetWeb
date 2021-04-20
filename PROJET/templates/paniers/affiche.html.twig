@@ -1,0 +1,29 @@
+{% extends 'Layouts/base.html.twig' %}
+{% block title %}Mon Panier{% endblock %}
+{% block titre_principal %}Mon Panier{% endblock %}
+{% block vue %}
+
+{% if paniers is null %}
+<p>Votre Panier est vide</p>
+{% else %}
+    <table>
+        <tr>
+            <td>Libellé</td>
+            <td>Quantité</td>
+            <td>Prix</td>
+        </tr>
+        <tbody>
+        {% for panier in paniers %}
+            <tr>
+                {% for produit in produits %}
+                    {% if panier.idP == produit.id %}
+                        <td>{{ produit.name }}</td>
+                        <td>{{ panier.quantite }}</td>
+                        <td>{{ produit.prix }}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+{% endif %}
+{% endblock %}

@@ -64,16 +64,16 @@ class Utilisateurs
      * @ORM\Column(type="boolean", options={"comment"= "type boolean"})
      */
     private $isadmin;
-
+/*
     /**
      * @ORM\ManyToOne (targetEntity=Panier::class, inversedBy="idU")
      */
-    private $paniers;
+   /* private $paniers;
 
     public function __construct()
     {
         $this->paniers = new ArrayCollection();
-    }
+    }*/
 
     public function getId(): ?int
     {

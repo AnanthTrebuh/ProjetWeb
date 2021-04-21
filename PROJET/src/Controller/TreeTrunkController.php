@@ -85,3 +85,7 @@ class TreeTrunkController extends AbstractController
     }
 
 }
+/*
+ * Nathan Hubert
+ * Valentin Lescorbie
+ */

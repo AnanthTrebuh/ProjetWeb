@@ -76,3 +76,7 @@ class TreeTrunk
         return $this;
     }
 }
+/*
+ * Nathan Hubert
+ * Valentin Lescorbie
+ */

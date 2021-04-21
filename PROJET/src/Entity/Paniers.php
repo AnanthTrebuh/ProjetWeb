@@ -6,6 +6,7 @@ use App\Repository\PaniersRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table (name="im2021_paniers")
  * @ORM\Entity(repositoryClass=PaniersRepository::class)
  */
 class Paniers
@@ -73,3 +74,7 @@ class Paniers
         return $this;
     }
 }
+/*
+ * Nathan Hubert
+ * Valentin Lescorbie
+ */

@@ -1,0 +1,21 @@
+{% extends 'Layouts/base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block titre_principal %}
+    Bienvenue à l'accueil
+    {% if user is null %}
+    cher Visiteur
+    {% elseif user.isadmin %}
+    cher Administrateur
+    {% else %}
+    cher Client
+    {% endif %}
+    !
+
+{% endblock %}
+
+{#
+ Nathan Hubert
+ Valentin Lescorbie
+#}

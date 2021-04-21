@@ -29,3 +29,7 @@ class TreeTrunkType extends AbstractType
         ]);
     }
 }
+/*
+ * Nathan Hubert
+ * Valentin Lescorbie
+ */

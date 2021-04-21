@@ -139,12 +139,11 @@ class UtilisateursController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $utilisateurRepository = $em->getRepository('App:Utilisateurs');
             $utilisateur = $utilisateurRepository->find($id);
-
             $em->remove($utilisateur);
             $em->flush();
 
         }
-        return $this->redirectToRoute('utilisateurs_list');
+        return $this->redirectToRoute('panier_suppr_user_panier', ['id' => $id]);
     }
 
     /**
@@ -214,3 +213,7 @@ class UtilisateursController extends AbstractController
         return $this->redirectToRoute('accueil');
     }
 }
+/*
+ * Nathan Hubert
+ * Valentin Lescorbie
+ */

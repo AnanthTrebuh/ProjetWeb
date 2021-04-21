@@ -48,3 +48,7 @@ class TreeTrunkRepository extends ServiceEntityRepository
     }
     */
 }
+/*
+ * Nathan Hubert
+ * Valentin Lescorbie
+ */

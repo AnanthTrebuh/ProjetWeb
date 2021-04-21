@@ -7,7 +7,7 @@
 {% block titre_principal %}Liste des produits{% endblock %}
 
 {% block vue %}
-    {% if treeTrunks is null %}
+    {% if treeTrunks is empty %}
         <p>il n'y as pas de tronc d'arbres dans la liste</p>
     {% else %}
         <form action="{{ path('ajout_panier') }}" method="post">
@@ -46,3 +46,8 @@
         </form>
     {% endif %}
 {% endblock %}
+
+{#
+Nathan Hubert
+Valentin Lescorbie
+#}

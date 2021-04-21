@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PaniersController extends AbstractController
 {
+
     /**
      * @route(
      *     "panier/list_Produit",
@@ -31,7 +32,6 @@ class PaniersController extends AbstractController
         $paniers = $panierRepository->findBy(array('idU'=> $utilisateur->getId()));
         $produitRep = $em->getRepository('App:TreeTrunk');
         $produits = $produitRep->findAll();
-
         $args = array(
             'paniers' => $paniers,
             'produits' => $produits
@@ -89,7 +89,6 @@ class PaniersController extends AbstractController
         }
         $em->flush();
         return $this->redirectToRoute('treeTrunk_list');
-        //return $this->render('paniers/ajout_panier.html.twig');
     }
 
     /**
@@ -98,8 +97,121 @@ class PaniersController extends AbstractController
      *     name="panier_suppr_items"
      *     )
      */
-    public function panierSupprItemAction(){
+    public function panierSupprItemAction($id){
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateurs');
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
+        if(!$utilisateur || $utilisateur->getIsadmin())
+        {
+            throw new NotFoundHttpException('Vous n\'avez pas avoir acces à cette page');
+        }
+        $this->supprItemAction($id);
 
+        return $this->redirectToRoute('panier_list_produit');
     }
 
+    /**
+     * @route(
+     *     "panier/vider",
+     *      name="panier_vider"
+     * )
+     */
+    public function panierViderAction()
+    {
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateurs');
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
+        if(!$utilisateur || $utilisateur->getIsadmin())
+        {
+            throw new NotFoundHttpException('Vous n\'avez pas avoir acces à cette page');
+        }
+        $panierRep = $em->getRepository('App:Paniers');
+        $paniers = $panierRep->findBy(array('idU'=> $utilisateur->getId()));
+
+        for($i = 0; $i < count($paniers); $i ++){
+            $panier = $paniers[$i];
+            $this->supprItemAction($panier->getId());
+        }
+
+        return $this->redirectToRoute('panier_list_produit');
+
+    }
+    /**
+     * @route(
+     *     "panier/user_suppr/{id}",
+     *      name="panier_suppr_user_panier"
+     * )
+     */
+    public function AdminPanierViderAction($id)
+    {
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateurs');
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
+        if(!$utilisateur->getIsadmin())
+        {
+            throw new NotFoundHttpException('Vous n\'avez pas avoir acces à cette page');
+        }
+        $panierRep = $em->getRepository('App:Paniers');
+        $paniers = $panierRep->findBy(array('idU'=> $id));
+
+        for($i = 0; $i < count($paniers); $i ++){
+            $panier = $paniers[$i];
+            $this->supprItemAction($panier->getId());
+        }
+
+        return $this->redirectToRoute('utilisateurs_list');
+
+    }
+    /**
+     * @param $id
+     */
+    public function supprItemAction($id){
+        $em = $this->getDoctrine()->getManager();
+
+        $produitRep = $em->getRepository('App:TreeTrunk');
+        $panierRep = $em->getRepository('App:Paniers');
+
+        $panier = $panierRep->find($id);
+        $produit = $produitRep->find($panier->getIdP());
+
+        $produit->setQuantite($produit->getQuantite()+$panier->getQuantite());
+
+        $em->remove($panier);
+        $em->persist($produit);
+
+        $em->flush();
+    }
+
+    /**
+     * @route(
+     *     "panier/commander",
+     *      name="panier_commander"
+     *     )
+     */
+    public function commandeAction(){
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateurs');
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
+        if(!$utilisateur || $utilisateur->getIsadmin())
+        {
+            throw new NotFoundHttpException('Vous n\'avez pas avoir acces à cette page');
+        }
+
+        $panierRep = $em->getRepository('App:Paniers');
+        $paniers = $panierRep->findBy(array('idU'=>$utilisateur->getId()));
+        for ($i = 0; $i < count($paniers); $i++){
+            $panier = $paniers[$i];
+            $em->remove($panier);
+        }
+        $em->flush();
+        return $this->redirectToRoute('panier_list_produit');
+    }
 }
+/*
+ * Nathan Hubert
+ * Valentin Lescorbie
+ */

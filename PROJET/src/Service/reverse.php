@@ -15,3 +15,7 @@ class reverse
         return $final_list;
     }
 }
+/*
+ * Nathan Hubert
+ * Valentin Lescorbie
+ */

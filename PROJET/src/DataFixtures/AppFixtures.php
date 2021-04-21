@@ -15,3 +15,7 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 }
+/*
+ * Nathan Hubert
+ * Valentin Lescorbie
+ */

@@ -45,3 +45,7 @@ class UtilisateursFixtures extends Fixture
         $manager->flush();
     }
 }
+/*
+ * Nathan Hubert
+ * Valentin Lescorbie
+ */

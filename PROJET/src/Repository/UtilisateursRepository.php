@@ -48,3 +48,7 @@ class UtilisateursRepository extends ServiceEntityRepository
     }
     */
 }
+/*
+ * Nathan Hubert
+ * Valentin Lescorbie
+ */

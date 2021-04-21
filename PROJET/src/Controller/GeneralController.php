@@ -13,7 +13,11 @@ class GeneralController extends AbstractController
      */
     public function AccueilAction() : Response
     {
-        return $this->render('accueil.html.twig');
+        $user = $this->getParameter('user');
+        $em = $this->getDoctrine()->getManager();
+        $utilisateurRepository = $em->getRepository('App:Utilisateurs');
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
+        return $this->render('Layouts/accueil.html.twig', ['user'=>$utilisateur]);
     }
 
 
@@ -22,7 +26,7 @@ class GeneralController extends AbstractController
         $user = $this->getParameter('user');
         $em = $this->getDoctrine()->getManager();
         $utilisateurRepository = $em->getRepository('App:Utilisateurs');
-        $utilisateur = $utilisateurRepository->findOneByidentifiant($user);
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
 
         $produitRep = $em->getRepository('App:TreeTrunk');
         $produits = $produitRep->findAll();
@@ -34,11 +38,12 @@ class GeneralController extends AbstractController
 
         return $this->render('Layouts/menu.html.twig', $args);
     }
+
     public function bandeauAction() : Response{
         $user = $this->getParameter('user');
         $em = $this->getDoctrine()->getManager();
         $utilisateurRepository = $em->getRepository('App:Utilisateurs');
-        $utilisateur = $utilisateurRepository->findOneByidentifiant($user);
+        $utilisateur = $utilisateurRepository->findOneBy(array('identifiant' => $user));
 
 
         $args =array(
@@ -48,3 +53,7 @@ class GeneralController extends AbstractController
         return $this->render('Layouts/bandeau.html.twig', $args);
     }
 }
+/*
+ * Nathan Hubert
+ * Valentin Lescorbie
+ */

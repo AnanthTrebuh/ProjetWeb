@@ -3,16 +3,19 @@
 {% block titre_principal %}Mon Panier{% endblock %}
 {% block vue %}
 
-{% if paniers is null %}
+{% if paniers is empty  %}
 <p>Votre Panier est vide</p>
 {% else %}
+    <div>
     <table>
         <tr>
             <td>Libellé</td>
             <td>Quantité</td>
-            <td>Prix</td>
+            <td>Prix unité</td>
+            <td>Prix Total</td>
         </tr>
         <tbody>
+        {% set prixTot = 0 %}
         {% for panier in paniers %}
             <tr>
                 {% for produit in produits %}
@@ -20,10 +23,25 @@
                         <td>{{ produit.name }}</td>
                         <td>{{ panier.quantite }}</td>
                         <td>{{ produit.prix }}</td>
+                        <td>{{ produit.prix * panier.quantite }}</td>
+                        <td><a href="{{ path("panier_suppr_items", { 'id' : panier.id}) }}">Supprimer</a> </td>
+                        {% set prixTot = prixTot + (produit.prix * panier.quantite) %}
                     {% endif %}
                 {% endfor %}
             </tr>
         {% endfor %}
         </tbody>
+    </table>
+    </div>
+
+    <div id=>
+    <p>Prix Total : {{ prixTot }} <a href="{{ path('panier_commander') }}">Commander</a>
+        <a href="{{ path('panier_vider') }}">Vider</a></p>
+    </div>
 {% endif %}
 {% endblock %}
+
+{#
+Nathan Hubert
+Valentin Lescorbie
+#}

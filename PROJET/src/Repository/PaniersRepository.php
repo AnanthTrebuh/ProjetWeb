@@ -48,3 +48,7 @@ class PaniersRepository extends ServiceEntityRepository
     }
     */
 }
+/*
+ * Nathan Hubert
+ * Valentin Lescorbie
+ */

@@ -142,36 +142,6 @@ class Utilisateurs
 
         return $this;
     }
-
-    /**
-     * @return Collection|Panier[]
-     */
-    public function getPaniers(): Collection
-    {
-        return $this->paniers;
-    }
-
-    public function addPanier(Panier $panier): self
-    {
-        if (!$this->paniers->contains($panier)) {
-            $this->paniers[] = $panier;
-            $panier->setIdU($this);
-        }
-
-        return $this;
-    }
-
-    public function removePanier(Panier $panier): self
-    {
-        if ($this->paniers->removeElement($panier)) {
-            // set the owning side to null (unless already changed)
-            if ($panier->getIdU() === $this) {
-                $panier->setIdU(null);
-            }
-        }
-
-        return $this;
-    }
 }
 /*
  * Nathan Hubert
